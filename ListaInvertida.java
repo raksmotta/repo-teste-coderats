@@ -12,7 +12,7 @@
  * Implementado pelo Prof. Marcos Kutova
  * v1.0 - 2020
  */
-package listaInvertida;
+package tp03.src.storage.structures.ListaInvertida;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,8 +21,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 
 public class ListaInvertida {
 
@@ -540,40 +538,4 @@ public class ListaInvertida {
       System.out.println();
     }
   }
-
-  ///////////////////////////////MODIFICAÇÕES/////////////////////////////
-
-    public void processSeriesTitle(String seriesTitle, int seriesId) throws Exception {
-
-        // Tokenize the series title
-        String[] terms = seriesTitle.toLowerCase().split("\\W+"); // Split by non-word characters
-        HashMap<String, Integer> termFrequency = new HashMap<>();
-
-        // Calculate term frequencies
-        for (String term : terms) {
-            if (!term.isEmpty()) {
-                termFrequency.put(term, termFrequency.getOrDefault(term, 0) + 1);
-            }
-        }
-
-        // Update the inverted list with terms and their frequencies
-        for (String term : termFrequency.keySet()) {
-            ElementoLista elemento = new ElementoLista(seriesId, termFrequency.get(term));
-            create(term, elemento);
-        }
-    }
-
-    public ArrayList<ElementoLista> search(String term) throws Exception {
-        
-        // Retrieve the list of elements for the term
-        ElementoLista[] elements = read(term);
-
-        // Sort the elements by frequency in descending order
-        ArrayList<ElementoLista> sortedList = new ArrayList<>();
-        Collections.addAll(sortedList, elements);
-        sortedList.sort((e1, e2) -> Float.compare(e2.getFrequencia(), e1.getFrequencia()));
-
-        return sortedList;
-    }
-
 }
